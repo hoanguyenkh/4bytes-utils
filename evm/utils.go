@@ -1,13 +1,17 @@
 package evm
 
-import "github.com/akrylysov/pogreb"
+import (
+	"github.com/akrylysov/pogreb"
+	"github.com/akrylysov/pogreb/fs"
+	"strings"
+)
 
 type EvmUtils struct {
 	db *pogreb.DB
 }
 
 func NewEvmUtils() (EvmUtils, error) {
-	db, err := pogreb.Open("4bytes.db", nil)
+	db, err := pogreb.Open("4bytes.db", &pogreb.Options{FileSystem: fs.OSMMap})
 	if err != nil {
 		return EvmUtils{}, err
 	}
@@ -17,7 +21,11 @@ func NewEvmUtils() (EvmUtils, error) {
 }
 
 func (utils *EvmUtils) GetSignature(signature string) (string, error) {
-	value, err := utils.db.Get([]byte(signature))
+	key := signature
+	if strings.HasPrefix(key, "0x") {
+		key = key[2:]
+	}
+	value, err := utils.db.Get([]byte(key))
 	if err != nil {
 		return "", err
 	}

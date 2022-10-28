@@ -51,4 +51,10 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Println(value)
+
+	value, err = utils.GetSignature("0x02751cec")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(value)
 }
