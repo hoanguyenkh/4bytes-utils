@@ -3,13 +3,14 @@ package main
 import (
 	"fmt"
 	"github.com/akrylysov/pogreb"
+	"github.com/hoanguyenkh/4bytes-utils/evm"
 	"io/ioutil"
 	"log"
 	"path/filepath"
 	"strings"
 )
 
-func main() {
+func initData() {
 	files, err := filepath.Glob("../4bytes/signatures/*")
 	if err != nil {
 		log.Fatal(err)
@@ -38,5 +39,16 @@ func main() {
 		}
 	}
 	fmt.Println("finish")
+}
 
+func main() {
+	utils, err := evm.NewEvmUtils()
+	if err != nil {
+		log.Fatal(err)
+	}
+	value, err := utils.GetSignature("02751cec")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(value)
 }

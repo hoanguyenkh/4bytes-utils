@@ -1,4 +1,4 @@
-module 4bytes-utils
+module github.com/hoanguyenkh/4bytes-utils
 
 go 1.19
 
